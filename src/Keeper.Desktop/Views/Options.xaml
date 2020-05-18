@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Keeper.Desktop.Views.Options"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Keeper.Desktop.Views"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:converters="clr-namespace:Keeper.Desktop.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <converters:BoolConverter x:Key="BoolConverter"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="8,8,8,8">
+            <controls:ToggleSwitch x:Name="SyncToggle" Header="Enable synchronization" OffContent="Disabled" OnContent="Enabled" IsOn="{Binding Sinchronization}" Toggled="ToggleSynchronization"/>
+        </StackPanel>
+        <StackPanel x:Name="SynchronizationInfo" Orientation="Horizontal" Grid.Row="1" Margin="8,8,8,8" Visibility="Collapsed">
+            <Label Content="Synchronization Code"/>
+            <Label Content="{Binding SynchronizationCode}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="8,8,8,8">
+            <Button Content="Reset Data" Click="ResetData_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

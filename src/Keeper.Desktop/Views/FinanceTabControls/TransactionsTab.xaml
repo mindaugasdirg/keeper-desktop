@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="Keeper.Desktop.Views.FinanceTabControls.TransactionsTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Keeper.Desktop.Views.FinanceTabControls"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:converters="clr-namespace:Keeper.Desktop.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <converters:MoneyConverter x:Key="MoneyConverter"/>
+        <converters:DateConverter x:Key="DateConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <ToolBar>
+                <Button x:Name="NewButton" Content="New"/>
+                <Button x:Name="EditButton" Content="Edit"/>
+                <Button x:Name="DeleteButton" Content="Delete"/>
+            </ToolBar>
+            <ToolBar>
+                <Label Content="Account" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ComboBox x:Name="AccountPicker" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" IsEditable="False" DisplayMemberPath="Name" Width="Auto" SelectionChanged="AccountPicker_SelectionChanged"/>
+            </ToolBar>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <DataGrid x:Name="TransactionsDataGridControl" Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="Auto" Header="Date" Binding="{Binding Path=Date, Converter={StaticResource DateConverter}}"/>
+                    <DataGridTextColumn Width="Auto" Header="Amount" Binding="{Binding Converter={StaticResource MoneyConverter}}"/>
+                    <DataGridTextColumn Width="Auto" Header="Category" Binding="{Binding Category.Name}"/>
+                    <DataGridTextColumn Width="Auto" Header="Description" Binding="{Binding Description}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <controls:Flyout Grid.RowSpan="3" x:Name="TransactionForm" Header="Create Transaction" Position="Right" AreAnimationsEnabled="True" Theme="Adapt">
+            <StackPanel Orientation="Vertical" Margin="12,0,12,0">
+                <Label Content="Amount"/>
+                <TextBox Text="{Binding Amount, Converter={StaticResource MoneyConverter}}" />
+                <Label Content="Description"/>
+                <TextBox Text="{Binding Description}" />
+                <Label Content="Category"/>
+                <ComboBox x:Name="CategoryPicker" SelectedValue="{Binding Category}" DisplayMemberPath="Name"/>
+                <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Right" Margin="0,16,0,0"/>
+            </StackPanel>
+        </controls:Flyout>
+    </Grid>
+</UserControl>
